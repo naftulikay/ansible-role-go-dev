@@ -15,7 +15,7 @@
    when: global
 
  - name: create install dir
-   file: path={{ install_dir }} ensure=directory
+   file: path={{ install_dir }} state=directory
    become: "{{ become }}"
    become_user: "{{ become_user }}"
 
