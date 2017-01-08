@@ -3,3 +3,4 @@
 version: "1.7.4"
 basedir: "{{ ansible_env.HOME }}"
 gopath: ""
+global: true
