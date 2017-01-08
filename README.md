@@ -1,4 +1,4 @@
-Ansible Go Development Environment Role
+ansible-role-godev [![Build Status][img-build-status]][build-status]
 =========
 
 A brief description of the role goes here.
@@ -38,3 +38,6 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+ [build-status]: https://travis-ci.org/naftulikay/ansible-role-godev
+ [img-build-status]: https://travis-ci.org/naftulikay/ansible-role-godev.svg?branch=master
