@@ -29,6 +29,12 @@ install:
 script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  # Run the role locally
+  - ansible-playbook tests/test.yml -i tests/inventory -c local
+  # Source the updated bashrc.
+  - source ~/.bashrc
+  # Evaluate that Go is on the PATH and that it's configured properly.
+  - go path
 
-notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+# notifications:
+#   webhooks: https://galaxy.ansible.com/api/v1/notifications/
