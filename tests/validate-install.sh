@@ -6,13 +6,10 @@ set -e
 # grep the bashrc
 grep -iP '^export (GOROOT|GOPATH|PATH)=.*' ~/.bashrc
 
-cat ~/.bashrc
-
 # source it
 source ~/.bashrc
 
-echo "PATH: "
-echo "$(echo $PATH | tr ':' '\n')"
+echo "PATH: ${PATH}"
 
 # determine GOROOT
 if [ "$GOROOT" != "$HOME/go${GO_VERSION}" ]; then
