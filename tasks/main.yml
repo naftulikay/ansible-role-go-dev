@@ -3,6 +3,7 @@
  - name: define user facts
    set_fact:
      install_dir: "{{ ansible_env.HOME }}/go{{ version }}"
+     become: false
      become_user: "{{ ansible_user_id }}"
    when: not global
 
@@ -10,11 +11,13 @@
    set_fact:
      install_dir: /usr/local/go{{ version }}
      become: true
+     become_user: "root"
    when: global
 
  - name: create install dir
    file: path={{ install_dir }} ensure=directory
    become: "{{ become }}"
+   become_user: "{{ become_user }}"
 
  - name: download
    unarchive:
@@ -23,3 +26,4 @@
      dest: "{{ install_dir }}"
      extra_opts: ["--strip-components=1"]
    become: "{{ become }}"
+   become_user: "{{ become_user }}"
