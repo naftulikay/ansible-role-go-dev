@@ -34,7 +34,8 @@ script:
   # Source the updated bashrc.
   - source ~/.bashrc
   # Evaluate that Go is on the PATH and that it's configured properly.
-  - go path
+  - go env
+  - echo $GOROOT $GOPATH $(which go)
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
