@@ -5,6 +5,7 @@
      install_dir: "{{ ansible_env.HOME }}/go{{ version }}"
      become: false
      become_user: "{{ ansible_user_id }}"
+     environment_file: "{{ ansible_env.HOME }}/.bashrc"
    when: not global
 
  - name: define global facts
@@ -12,6 +13,7 @@
      install_dir: /usr/local/go{{ version }}
      become: true
      become_user: "root"
+     environment_file: /etc/profile.d/go.sh
    when: global
 
  - name: create install dir
@@ -27,3 +29,16 @@
      extra_opts: ["--strip-components=1"]
    become: "{{ become }}"
    become_user: "{{ become_user }}"
+
+ - name: create symlink
+   file: src="{{ install_dir }}" dest=/usr/local/go state=link
+   when: link_go_root
+   become: true
+
+ - name: configure environment
+   blockinfile:
+     dest: "{{ environment_file }}"
+     block: |
+      export GOROOT="{% if link_go_root %}/usr/local/go{% else %}{{ install_dir }}{% endif %}"
+      export GOPATH="{{ gopath }}"
+      export PATH="$PATH:$GOROOT/bin"
