@@ -32,10 +32,7 @@ script:
   # Run the role locally
   - ansible-playbook tests/test.yml -i tests/inventory -c local
   # Source the updated bashrc.
-  - source ~/.bashrc
-  # Evaluate that Go is on the PATH and that it's configured properly.
-  - go env
-  - echo $GOROOT $GOPATH $(which go)
+  - tests/validate-install.sh
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
