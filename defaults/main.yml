@@ -1,0 +1,5 @@
+---
+# defaults file for godev
+version: "1.7.4"
+basedir: "{{ ansible_env.HOME }}"
+gopath: ""

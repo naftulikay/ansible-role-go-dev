@@ -1,0 +1,15 @@
+---
+# tasks file for godev
+ - name: download
+   unarchive:
+     src: https://storage.googleapis.com/golang/go{{ version }}.linux-amd64.tar.gz
+     remote_src: true
+     dest: "{{ basedir }}/go{{ version }}"
+     extra_opts: ["--strip-components=1"]
+
+ - name: configure environment
+   blockinfile:
+     dest: "{{ ansible_env.HOME }}/.bashrc"
+     block: |
+      export GOROOT="{{ basedir }}/go{{ version }}"
+      export GOPATH="{{ gopath }}"

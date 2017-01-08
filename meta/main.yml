@@ -1,0 +1,20 @@
+galaxy_info:
+  author: Naftuli Kay
+  description: Download, extract, and configure a Go installation for development.
+
+  license: MIT
+
+  min_ansible_version: 2.2
+
+  #
+  # Below are all platforms currently available. Just uncomment
+  # the ones that apply to your role. If you don't see your
+  # platform on this list, let us know and we'll get it added!
+  #
+  #platforms:
+
+  galaxy_tags:
+    - go
+    - golang
+
+dependencies: []
