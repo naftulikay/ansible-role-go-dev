@@ -7,7 +7,7 @@ set -e
 grep -iP '^export (GOROOT|GOPATH|PATH)=.*' ~/.bashrc
 
 # source it
-source ~/.bashrc
+. ~/.bashrc
 
 echo "PATH: ${PATH}"
 
