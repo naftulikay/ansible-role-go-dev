@@ -41,4 +41,4 @@
      block: |
       export GOROOT="{% if link_go_root %}/usr/local/go{% else %}{{ install_dir }}{% endif %}"
       export GOPATH="{{ gopath }}"
-      export PATH="$PATH:$GOROOT/bin"
+      export PATH="$GOROOT/bin:$PATH"

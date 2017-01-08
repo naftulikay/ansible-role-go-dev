@@ -7,6 +7,12 @@ python:
   - "2.6"
   - "3.5"
 
+cache:
+  pip: true
+
+env:
+  - GO_VERSION=1.7.4
+
 # Use the new container infrastructure
 sudo: false
 
@@ -28,11 +34,11 @@ install:
 
 script:
   # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - ansible-playbook tests/test.yml -i tests/inventory -e go_version=$GO_VERSION --syntax-check
   # Run the role locally
-  - ansible-playbook tests/test.yml -i tests/inventory -c local
+  - ansible-playbook tests/test.yml -i tests/inventory -e go_version=$GO_VERSION -c local
   # Source the updated bashrc.
-  - tests/validate-install.sh
+  - tests/validate-install.sh $GO_VERSION
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
