@@ -3,15 +3,8 @@
 # not here to screw around
 set -e
 
-# grep the bashrc
-grep -iP '^export (GOROOT|GOPATH|PATH)=.*' ~/.bashrc
-
-# source it
-source ~/.bashrc
-
-echo "PATH: ${PATH}"
-
-bash -c 'echo $PATH'
+# grep the bashrc for our variables and export them in this shell, I think that travis ci has a kill switch in the bashrc
+$(grep -iP '^export (GOROOT|GOPATH|PATH)=.*' ~/.bashrc)
 
 # determine GOROOT
 if [ "$GOROOT" != "$HOME/go${GO_VERSION}" ]; then
