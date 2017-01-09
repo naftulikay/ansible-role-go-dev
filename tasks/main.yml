@@ -38,6 +38,7 @@
  - name: configure environment
    blockinfile:
      dest: "{{ environment_file }}"
+     create: true
      block: |
       export GOROOT="{% if link_go_root %}/usr/local/go{% else %}{{ install_dir }}{% endif %}"
       export GOPATH="{{ gopath }}"
