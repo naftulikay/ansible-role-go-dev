@@ -34,9 +34,11 @@ install:
 
 script:
   # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory -e go_version=$GO_VERSION --syntax-check
+  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   # Run the role locally
-  - ansible-playbook tests/test.yml -i tests/inventory -e go_version=$GO_VERSION -c local
+  - ansible-playbook tests/test.yml -i tests/inventory -c local \
+      -e go_version=$GO_VERSION \
+      -e user_environment_file=$HOME/.travis-bashrc
   # Source the updated bashrc.
   - tests/validate-install.sh $GO_VERSION
 

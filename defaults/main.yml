@@ -4,3 +4,5 @@ version: "1.7.4"
 gopath: "{{ ansible_env.HOME }}/gopath"
 global: true
 link_go_root: true
+
+user_environment_file: "{{ ansible_env.HOME }}/.bashrc"

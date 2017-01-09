@@ -5,7 +5,7 @@
      install_dir: "{{ ansible_env.HOME }}/go{{ version }}"
      become: false
      become_user: "{{ ansible_user_id }}"
-     environment_file: "{{ ansible_env.HOME }}/.bashrc"
+     environment_file: "{{ user_environment_file }}"
    when: not global
 
  - name: define global facts
