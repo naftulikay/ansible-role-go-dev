@@ -2,7 +2,7 @@
 # tasks file for godev
  - name: define user facts
    set_fact:
-     install_dir: "{{ ansible_env.HOME }}/go{{ version }}"
+     install_dir: "{{ user_install_base }}/go{{ version }}"
      become: false
      become_user: "{{ ansible_user_id }}"
      environment_file: "{{ user_environment_file }}"

@@ -3,8 +3,11 @@
 # not here to screw around
 set -e
 
+GO_VERSION="${GO_VERSION:-1.7.4}"
+GO_ENV_FILE="${GO_ENV_FILE:-$HOME/.travis-bashrc}"
+
 # source it
-source ~/.travis-bashrc
+source $GO_ENV_FILE
 
 # determine GOROOT
 if [ "$GOROOT" != "$HOME/go${GO_VERSION}" ]; then
@@ -15,7 +18,7 @@ else
 fi
 
 # determine GOPATH
-if [ "$GOPATH" != "$HOME/gopath" ]; then
+if [ "$GOPATH" != "$HOME" ]; then
   echo "Invalid GOPATH: $GOPATH" >&2
   exit 1
 else

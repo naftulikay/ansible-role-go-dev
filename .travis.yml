@@ -11,7 +11,7 @@ cache:
   pip: true
 
 env:
-  - GO_VERSION=1.7.4
+  - GO_VERSION=1.7.4 GO_ENV_FILE=$HOME/.travis-bashrc
 
 # Use the new container infrastructure
 sudo: false
@@ -36,9 +36,9 @@ script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   # Run the role locally
-  - ansible-playbook tests/test.yml -i tests/inventory -c local -e go_version=$GO_VERSION -e go_env_file=$HOME/.travis-bashrc
+  - ansible-playbook tests/test.yml -i tests/inventory -c local -e go_version=$GO_VERSION -e go_env_file=$GO_ENV_FILE
   # Source the updated bashrc.
-  - tests/validate-install.sh $GO_VERSION
+  - tests/validate-install.sh
 
-# notifications:
-#   webhooks: https://galaxy.ansible.com/api/v1/notifications/
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
