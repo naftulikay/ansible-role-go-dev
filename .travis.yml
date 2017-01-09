@@ -38,7 +38,7 @@ script:
   # Run the role locally
   - ansible-playbook tests/test.yml -i tests/inventory -c local \
       -e go_version=$GO_VERSION \
-      -e user_environment_file=$HOME/.travis-bashrc
+      -e go_env_file=$HOME/.travis-bashrc
   # Source the updated bashrc.
   - tests/validate-install.sh $GO_VERSION
 
