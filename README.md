@@ -6,13 +6,24 @@ A brief description of the role goes here.
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This module should be compatible on just about any Unix-compatible system supported by Go, with minimal configuration.
 
 Role Variables
 --------------
 
 <dl>
-
+  <dt><code>version</code></dt>
+  <dd>The version string of Go to install. Example: <code>1.7.4</code>.</dd>
+  <dt><code>global</code></dt>
+  <dd>Boolean. Whether to install Go to a system directory, requiring root access (<code>true</code>), or only to a user directory (<code>false</code>).
+  <dt><code>link_go_root</code></dt>
+  <dd>Boolean. Whether to create a symlink at <code>/usr/local/go</code> to the installed Go version.</dd>
+  <dt><code>gopath</code></dt>
+  <dd>Value to set for the <code>GOPATH</code> environment variable.</dd>
+  <dt><code>user_environment_file</code></dt>
+  <dd>For user installs, which file to append environment variable exports to.</dd>
+  <dt><code>user_install_base</code></dt>
+  <dd>For user installs, the root directory to host Go installations.</dd>
 </dl>
 
 Dependencies
@@ -23,11 +34,29 @@ None.
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Install system Go with a symlink to `/usr/local/go`:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+ - hosts: servers
+   roles:
+     - role: godev
+```
+
+Install a specific version of Go:
+
+```
+ - hosts: servers
+   roles:
+     - { role: godev, version: "1.8beta2" }
+```
+
+Install a user-only Go:
+
+```
+ - hosts: servers
+   roles:
+    - { role: godev, global: false, link_go_root: false }
+```
 
 License
 -------
