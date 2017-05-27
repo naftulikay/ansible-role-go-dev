@@ -1,44 +1,50 @@
 ---
+dist: trusty
+sudo: required
+
 language: python
 
-# support minimum python versions specified here:
-# https://docs.ansible.com/ansible/dev_guide/developing_modules_python3.html
-python:
-  - "2.6"
-  - "3.5"
+matrix:
+  fast_finish: true
 
-cache:
-  pip: true
+services:
+  - docker
 
 env:
-  - GO_VERSION=1.7.4 GO_ENV_FILE=$HOME/.travis-bashrc
+  global: # applied to every run
+    - container_env_term: xterm
+    - container_env_lang: en_US.UTF-8
 
-# Use the new container infrastructure
-sudo: false
+    - container_user: captainamazing
 
-# Install ansible
-addons:
-  apt:
-    packages:
-    - python-pip
+    - go_version: 1.8.3
+
+    - role_name: godev
+
+  matrix: # each entry is its own run
+    - { image: "naftulikay/centos-vm:7",      systemd: true }
+    - { image: "naftulikay/xenial-vm:latest", systemd: true }
+    - { image: "naftulikay/trusty-vm:latest", systemd: false }
+
+
+before_install:
+  # display docker versioning information
+  - docker --version
+  # fetch the image
+  - tests/runc start ${image} ${systemd}
+  # echo ansible version
+  - tests/runc exec ansible --version
 
 install:
-  # Install ansible
-  - pip install ansible
-
-  # Check ansible version
-  - ansible --version
-
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
+  # fetch test dependencies
+  - tests/runc exec ansible-galaxy install -r /etc/ansible/roles/${role_name}/tests/requirements.yml
 
 script:
-  # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  # Run the role locally
-  - ansible-playbook tests/test.yml -i tests/inventory -c local -e go_version=$GO_VERSION -e go_env_file=$GO_ENV_FILE
-  # Source the updated bashrc.
-  - tests/validate-install.sh
+  # run ansible in the container
+  - "tests/runc exec ansible-playbook \
+          -e go_version=$go_version \
+          -e goss_test=/etc/ansible/roles/${role_name}/tests/goss.yml \
+        /etc/ansible/roles/${role_name}/tests/playbook.yml"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

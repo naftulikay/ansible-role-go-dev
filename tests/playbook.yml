@@ -1,0 +1,33 @@
+---
+- name: create container user
+  hosts: localhost
+  vars:
+    container_user: captainamazing
+  tasks:
+    - name: create
+      user: name={{ container_user }} comment="Container User" shell=/bin/bash state=present
+
+- name: execute role
+  hosts: localhost
+  roles:
+    - role: godev
+
+- name: execute tests
+  hosts: localhost
+  roles:
+    - role: degoss
+      when: idempotence_test is undefined
+
+- name: display
+  hosts: localhost
+  vars:
+    container_user: captainamazing
+  tasks:
+    - name: environment
+      shell: go env
+      become: true
+      become_user: "{{ container_user }}"
+      become_flags: -i
+      register: go_env_output
+
+    - debug: msg="{{ go_env_output.stdout }}"

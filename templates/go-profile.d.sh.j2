@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+# Manage Go Language environment variables.
+export GOROOT="{{ go_goroot_dir }}" \
+  GOPATH="{{ go_user_path }}"
+
+# Add go, and go shared utilities to executable PATH
+export PATH="$PATH:{{ go_goroot_dir }}/bin:{{ go_user_path }}/bin"

@@ -1,45 +1,31 @@
 ---
 # tasks file for godev
- - name: define user facts
-   set_fact:
-     install_dir: "{{ user_install_base }}/go{{ version }}"
-     become: false
-     become_user: "{{ ansible_user_id }}"
-     environment_file: "{{ user_environment_file }}"
-   when: not global
-
- - name: define global facts
-   set_fact:
-     install_dir: /usr/local/go{{ version }}
-     become: true
-     become_user: "root"
-     environment_file: /etc/profile.d/go.sh
-   when: global
-
  - name: create install dir
-   file: path={{ install_dir }} state=directory
-   become: "{{ become }}"
-   become_user: "{{ become_user }}"
+   file: path={{ go_install_dir }} state=directory
+   become: true
 
  - name: download
    unarchive:
-     src: https://storage.googleapis.com/golang/go{{ version }}.linux-amd64.tar.gz
+     src: https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz
      remote_src: true
-     dest: "{{ install_dir }}"
+     dest: "{{ go_install_dir }}"
      extra_opts: ["--strip-components=1"]
-   become: "{{ become }}"
-   become_user: "{{ become_user }}"
+   become: true
 
  - name: create symlink
-   file: src="{{ install_dir }}" dest=/usr/local/go state=link
-   when: link_go_root
+   file:
+     state: link
+     src: "{{ go_install_dir }}"
+     dest: "{{ go_goroot_dir }}"
+     mode: "0755"
+     owner: root
+     group: root
    become: true
 
  - name: configure environment
-   blockinfile:
-     dest: "{{ environment_file }}"
-     create: true
-     block: |
-      export GOROOT="{% if link_go_root %}/usr/local/go{% else %}{{ install_dir }}{% endif %}"
-      export GOPATH="{{ gopath }}"
-      export PATH="$GOROOT/bin:$PATH"
+   template:
+     src: go-profile.d.sh.j2
+     dest: "{{ profile_d_path }}/go.sh"
+     owner: root
+     group: root
+     mode: 0755
