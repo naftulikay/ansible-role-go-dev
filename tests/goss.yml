@@ -1,0 +1,24 @@
+---
+file:
+  /etc/profile.d/go.sh:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+      - "GOROOT=\"/usr/local/go\""
+      - "GOPATH=\"$HOME/.go\""
+
+  /usr/local/go:
+    exists: true
+    owner: root
+    group: root
+    filetype: symlink
+    linked-to: /usr/local/go-1.8.3
+
+command:
+  '/usr/local/go/bin/go version':
+    exit-status: 0
+    stdout:
+      - "1.8.3"
