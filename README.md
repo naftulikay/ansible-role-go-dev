@@ -1,7 +1,6 @@
 # ansible-role-go-dev [![Build Status][img-build-status]][build-status]
 
-Installs and configures a Go development environment on the target machine, installing a given version of Go, modifying
-the `GOPATH`; the `GOROOT`; and the `PATH` to accommodate a Go development environment.
+Installs and configures a Go development environment.
 
 Available on Ansible Galaxy at [`naftulikay.go-dev`][galaxy].
 
@@ -15,15 +14,9 @@ Please tour `vars/main.yml` and `defaults/main.yml` for a view into other variab
 
 <dl>
   <dt><code>go_version</code></dt>
-  <dd>The version string of Go to install. Example: <code>1.7.4</code>.</dd>
-  <dt><code>go_user_path</code></dt>
-  <dd>The user directory to host local Go libraries in. Environment variables will be evaluated by the user's shell. Optionally a colon delimited string. These will be added to <code>GOPATH</code>.</dd>
-  <dt><code>go_goroot_dir</code></dt>
-  <dd>Path to where <code>GOROOT</code> should live.</dd>
-  <dt><code>go_install_base</code></dt>
-  <dd>The directory in which to install <em>versions</em> of Go which are then symlinked to <code>GOROOT</code>.</dd>
-  <dt><code>go_install_dir</code></dt>
-  <dd>The directory in which to install the given version of Go. Defaults to: <pre>{{ go_install-base}}/go-{{ go_version }}</pre></dd>
+  <dd>The version string of Go to install. Example: <code>1.8.3</code>.</dd>
+  <dt><code>go_user</code></dt>
+  <dd>The user for which to install <code>govendor</code> and other tools.</dd>
 </dl>
 
 ## Dependencies

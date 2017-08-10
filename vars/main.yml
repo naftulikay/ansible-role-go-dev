@@ -1,7 +1,9 @@
 ---
-# vars file for godev
 go_goroot_dir: /usr/local/go
 go_version: "1.8.3"
 go_install_base: /usr/local
 go_install_dir: "{{ go_install_base }}/go-{{ go_version }}"
 go_user_path: "$HOME/.go"
+
+addtl_go_system_packages: []
+addtl_go_user_packages: []

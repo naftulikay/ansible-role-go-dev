@@ -1,33 +1,27 @@
 ---
-- name: create container user
+- name: setup
   hosts: localhost
   vars:
-    container_user: captainamazing
+    container_user: vagrant
   tasks:
-    - name: create
+    - name: create user
       user: name={{ container_user }} comment="Container User" shell=/bin/bash state=present
 
-- name: execute role
+- name: build
   hosts: localhost
   roles:
-    - role: godev
+    - role: go-dev
+      go_version: 1.8.3
+      go_user: vagrant
 
-- name: execute tests
+- name: test
   hosts: localhost
+  vars: {}
   roles:
     - role: degoss
-      when: idempotence_test is undefined
-
-- name: display
-  hosts: localhost
-  vars:
-    container_user: captainamazing
-  tasks:
-    - name: environment
-      shell: go env
-      become: true
-      become_user: "{{ container_user }}"
-      become_flags: -i
-      register: go_env_output
-
-    - debug: msg="{{ go_env_output.stdout }}"
+      degoss_no_clean: true
+      goss_file: goss.yml
+      goss_addtl_dirs: [goss.d/]
+      goss_env_vars:
+        go_version: 1.8.3
+        go_user: vagrant

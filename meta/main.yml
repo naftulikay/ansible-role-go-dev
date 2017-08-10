@@ -1,6 +1,8 @@
 galaxy_info:
+  name: go-dev
+  version: v1.1.0
   author: Naftuli Kay
-  description: Download, extract, and configure a Go installation for development.
+  description: Install and configure a Go development environment on a system.
 
   license: MIT
 
