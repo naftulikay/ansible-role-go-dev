@@ -1,0 +1,8 @@
+---
+- name: install govendor
+  command: "go get -u github.com/kardianos/govendor"
+  args:
+    creates: "{{ go_user_home }}/.go/bin/govendor"
+  become: true
+  become_user: "{{ go_user }}"
+  become_flags: -Hi

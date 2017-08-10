@@ -1,31 +1,28 @@
 ---
-# tasks file for godev
- - name: create install dir
-   file: path={{ go_install_dir }} state=directory
-   become: true
+- name: fail unless go_user is defined
+  fail: msg="go_user must be set."
+  when: go_user is not defined
 
- - name: download
-   unarchive:
-     src: https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz
-     remote_src: true
-     dest: "{{ go_install_dir }}"
-     extra_opts: ["--strip-components=1"]
-   become: true
+- name: discover os facts
+  include: discover/os.yml
 
- - name: create symlink
-   file:
-     state: link
-     src: "{{ go_install_dir }}"
-     dest: "{{ go_goroot_dir }}"
-     mode: "0755"
-     owner: root
-     group: root
-   become: true
+- name: discover go facts
+  include: discover/go.yml
 
- - name: configure environment
-   template:
-     src: go-profile.d.sh.j2
-     dest: "{{ profile_d_path }}/go.sh"
-     owner: root
-     group: root
-     mode: 0755
+- name: include system tasks
+  include: system.yml
+
+- name: include user tasks
+  include: user.yml
+
+# install additional dependencies
+- name: install additional go system packages
+  package: name={{ item }} state=present
+  with_items: "{{ addtl_go_system_packages }}"
+
+- name: install additional go user packages
+  command: "go get -u {{ item }}"
+  become: true
+  become_user: "{{ go_user }}"
+  become_flags: -Hi
+  with_items: "{{ addtl_go_user_packages }}"

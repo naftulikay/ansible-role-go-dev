@@ -1,0 +1,10 @@
+---
+- name: get go user details
+  command: getent passwd {{ go_user }}
+  become: true
+  become_user: "{{ go_user }}"
+  changed_when: false
+  register: go_user_check
+
+- name: set go user home
+  set_fact: go_user_home="{{ go_user_check.stdout_lines[0].split(':')[5] }}"

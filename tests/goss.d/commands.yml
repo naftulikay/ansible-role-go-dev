@@ -1,0 +1,9 @@
+---
+command:
+  'sudo -Hiu {{.Env.go_user}} which govendor':
+    exit-status: 0
+
+  '/usr/local/go/bin/go version':
+    exit-status: 0
+    stdout:
+      - "{{.Env.go_version}}"
