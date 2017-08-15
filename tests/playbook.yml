@@ -25,3 +25,4 @@
       goss_env_vars:
         go_version: 1.8.3
         go_user: vagrant
+        go_goroot_dir: /usr/local/go

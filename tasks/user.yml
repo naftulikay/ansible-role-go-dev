@@ -1,6 +1,6 @@
 ---
 - name: install govendor
-  command: "go get -u github.com/kardianos/govendor"
+  command: "{{ go_goroot_dir }}/bin/go get -u github.com/kardianos/govendor"
   args:
     creates: "{{ go_user_home }}/.go/bin/govendor"
   become: true
