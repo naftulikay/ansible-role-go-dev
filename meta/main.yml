@@ -1,6 +1,6 @@
 galaxy_info:
   name: go-dev
-  version: v1.1.0
+  version: v1.1.1
   author: Naftuli Kay
   description: Install and configure a Go development environment on a system.
 
