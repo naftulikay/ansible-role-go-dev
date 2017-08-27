@@ -1,6 +1,9 @@
 ---
 - name: install govendor
   command: "{{ go_goroot_dir }}/bin/go get -u github.com/kardianos/govendor"
+  environment:
+    GOPATH: "{{ go_user_path.replace('$HOME', go_user_home) }}"
+    GOROOT: "{{ go_goroot_dir }}"
   args:
     creates: "{{ go_user_home }}/.go/bin/govendor"
   become: true
