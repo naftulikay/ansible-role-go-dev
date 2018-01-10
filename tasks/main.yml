@@ -4,16 +4,16 @@
   when: go_user is not defined
 
 - name: discover os facts
-  include: discover/os.yml
+  include_tasks: discover/os.yml
 
 - name: discover go facts
-  include: discover/go.yml
+  include_tasks: discover/go.yml
 
 - name: include system tasks
-  include: system.yml
+  include_tasks: system.yml
 
 - name: include user tasks
-  include: user.yml
+  include_tasks: user.yml
 
 # install additional dependencies
 - name: install additional go system packages
