@@ -1,12 +1,11 @@
 galaxy_info:
   name: go-dev
-  version: v1.1.1
   author: Naftuli Kay
   description: Install and configure a Go development environment on a system.
 
   license: MIT
 
-  min_ansible_version: 2.2
+  min_ansible_version: 2.4
 
   platforms:
     - name: EL
