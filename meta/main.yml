@@ -20,4 +20,5 @@ galaxy_info:
     - go
     - golang
 
-dependencies: []
+dependencies:
+  - naftulikay.base

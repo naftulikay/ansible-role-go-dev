@@ -1,0 +1,21 @@
+---
+- name: determine local user name
+  hosts: all
+  connection: local
+  tasks:
+    - name: detect local user
+      local_action: command whoami
+      changed_when: false
+      register: host_user
+
+    - name: set local user fact
+      set_fact: local_user={{ host_user.stdout }}
+
+- name: apply config locally
+  hosts: all
+  connection: local
+  roles:
+    - role: go-dev
+      go_user: "{{ local_user }}"
+      go_user_path: "$HOME/devel"
+      godep_version: latest
