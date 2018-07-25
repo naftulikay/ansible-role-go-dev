@@ -1,6 +1,6 @@
 ---
 command:
-  'sudo -Hiu {{.Env.go_user}} which govendor':
+  'sudo -Hiu {{.Env.go_user}} which dep':
     exit-status: 0
 
   'sudo -Hiu {{.Env.go_user}} {{.Env.go_goroot_dir}}/bin/go get -u github.com/spf13/cobra':
