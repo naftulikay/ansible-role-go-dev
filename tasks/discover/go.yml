@@ -3,6 +3,7 @@
   command: sh -c 'echo $HOME'
   become: true
   become_user: "{{ go_user }}"
+  become_flags: -Hi
   changed_when: false
   register: go_user_check
 
