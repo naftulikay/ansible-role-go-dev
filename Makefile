@@ -19,6 +19,7 @@ start-linux:
 test-linux: start
 	@docker exec $(IMAGE) ansible --version
 	@docker exec $(IMAGE) wait-for-boot
+	@docker exec $(IMAGE) ansible-galaxy install -r /etc/ansible/roles/default/tests/requirements.yml
 	@docker exec $(IMAGE) env ANSIBLE_FORCE_COLOR=yes \
 		ansible-playbook /etc/ansible/roles/default/tests/playbook.yml
 
@@ -45,7 +46,7 @@ start-osx:
 test-osx: start
 	@mkdir -p .ansible/galaxy-roles
 	@rsync --delete --exclude=.ansible/galaxy-roles -a ./ .ansible/galaxy-roles/default/
-	@ansible-galaxy install -p .ansible/galaxy-roles -r requirements.yml
+	@ansible-galaxy install -p .ansible/galaxy-roles -r tests/requirements.yml
 	@ansible-playbook -c local -i 127.0.0.1, tests/playbook.yml
 
 install-osx:

@@ -6,8 +6,8 @@ Available on Ansible Galaxy at [`naftulikay.go-dev`][galaxy].
 
 ## Requirements
 
-Supporting (under test) Ubuntu 14.04, 16.04, CentOS, and OSX. Only amd64 architecture is supported for now. Other
-Unix-like environments may work but are not under test.
+Supporting (under test) Ubuntu 14.04, 16.04, elementary OS Loki, CentOS, and OSX. Only amd64 architecture is supported
+for now. Other Unix-like environments may work but are not under test.
 
 ## Role Variables
 
