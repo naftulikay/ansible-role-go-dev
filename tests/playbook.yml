@@ -25,6 +25,6 @@
       goss_file: goss.yml
       goss_addtl_dirs: [goss.d]
       goss_env_vars:
-        go_version: 1.8.3
+        go_version: 1.10.3
         go_user: vagrant
         go_goroot_dir: /usr/local/go
