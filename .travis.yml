@@ -15,11 +15,6 @@ matrix:
       services:
         - docker
     - os: linux
-      env: IMAGE=trusty
-      dist: trusty
-      services:
-        - docker
-    - os: linux
       env: IMAGE=xenial
       dist: trusty
       services:
