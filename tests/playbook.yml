@@ -12,7 +12,7 @@
   hosts: localhost
   roles:
     - role: default
-      go_version: "{{ go_version | default('1.10.2') }}"
+      go_version: 1.10.3
       go_user: vagrant
 
 - name: test
