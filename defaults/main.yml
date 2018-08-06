@@ -1,6 +1,6 @@
 ---
 go_goroot_dir: /usr/local/go
-go_version: "1.10.3"
+go_version: "1.8.3"
 go_install_base: /usr/local
 go_install_dir: "{{ go_install_base }}/go-{{ go_version }}"
 go_user_path: "$HOME/.go"
