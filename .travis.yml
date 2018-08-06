@@ -1,18 +1,33 @@
 ---
-dist: trusty
-sudo: required
+language: generic
 
 matrix:
   fast_finish: true
+  include:
+    - os: linux
+      env: IMAGE=centos7
+      dist: trusty
+      services:
+        - docker
+    - os: linux
+      env: IMAGE=loki
+      dist: trusty
+      services:
+        - docker
+    - os: linux
+      env: IMAGE=trusty
+      dist: trusty
+      services:
+        - docker
+    - os: linux
+      env: IMAGE=xenial
+      dist: trusty
+      services:
+       - docker
+    - os: osx
+      sudo: required
 
-services:
-  - docker
-
-env:
-  matrix: # each entry is its own run
-    - IMAGE: centos7
-    - IMAGE: xenial
-
+install: make install
 script: make clean test
 
 notifications:
