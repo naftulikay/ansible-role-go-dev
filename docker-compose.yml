@@ -35,19 +35,6 @@ services:
       - ./tests/ansible.cfg:/etc/ansible/ansible.cfg:ro
     stop_grace_period: 1s
 
-  trusty:
-    container_name: trusty
-    image: naftulikay/trusty-vm:latest
-    depends_on:
-      - dind
-    links:
-      - dind:docker
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      - ./:/etc/ansible/roles/default:ro
-      - ./tests/ansible.cfg:/etc/ansible/ansible.cfg:ro
-    stop_grace_period: 1s
-
   xenial:
     container_name: xenial
     image: naftulikay/xenial-vm:latest
