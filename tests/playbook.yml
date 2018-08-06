@@ -1,6 +1,7 @@
 ---
 - name: setup
   hosts: localhost
+  become: true
   vars:
     container_user: vagrant
   tasks:
