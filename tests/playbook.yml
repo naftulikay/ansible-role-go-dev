@@ -1,18 +1,17 @@
 ---
 - name: setup
   hosts: localhost
-  vars:
-    container_user: vagrant
+  become: true
   tasks:
     - name: create user
-      user: name={{ container_user }} comment="Container User" shell=/bin/bash state=present
+      user: name={{ test_user | default('vagrant') }} comment="Container User" shell=/bin/bash state=present
 
 - name: build
   hosts: localhost
   roles:
     - role: default
-      go_version: 1.8.3
-      go_user: vagrant
+      go_version: 1.10.3
+      go_user: "{{ test_user | default('vagrant') }}"
 
 - name: test
   hosts: localhost
@@ -24,6 +23,6 @@
       goss_file: goss.yml
       goss_addtl_dirs: [goss.d]
       goss_env_vars:
-        go_version: 1.8.3
-        go_user: vagrant
+        go_version: 1.10.3
+        go_user: "{{ test_user | default('vagrant') }}"
         go_goroot_dir: /usr/local/go

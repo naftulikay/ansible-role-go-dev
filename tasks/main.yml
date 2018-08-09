@@ -3,11 +3,18 @@
   fail: msg="go_user must be set."
   when: go_user is not defined
 
-- name: discover os facts
-  include_tasks: discover/os.yml
+- name: get go user details
+  command: sh -c 'echo $HOME'
+  become: true
+  become_user: "{{ go_user }}"
+  become_flags: -Hi
+  changed_when: false
+  register: go_user_check
+  vars:
+    ansible_ssh_pipelining: "{{ is_macos }}"
 
-- name: discover go facts
-  include_tasks: discover/go.yml
+- name: set go user home
+  set_fact: go_user_home="{{ go_user_check.stdout_lines[0] }}"
 
 - name: include system tasks
   include_tasks: system.yml

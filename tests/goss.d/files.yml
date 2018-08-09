@@ -15,4 +15,4 @@ file:
     owner: root
     group: root
     filetype: symlink
-    linked-to: /usr/local/go-1.8.3
+    linked-to: /usr/local/go-{{.Env.go_version}}
