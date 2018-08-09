@@ -8,9 +8,32 @@
   become: true
   when: is_ubuntu_derivative
 
+- name: fix homebrew ownership
+  command: find /usr/local -mindepth 1 -maxdepth 1 -type d -exec chown -R {{ go_user }}:admin {} \;
+  become: true
+  when: is_macos
+
 - name: install git
   package: name=git state=present
   become: true
+  become_user: |-
+    {%- if is_linux -%}
+      root
+    {%- else -%}
+      {{ go_user }}
+    {%- endif -%}
+  become_flags: -Hi
+  vars:
+    ansible_ssh_pipelining: "{{ is_macos }}"
+
+- name: install GNU tar
+  package: name=gnu-tar state=present
+  become: true
+  become_user: "{{ go_user }}"
+  become_flags: -Hi
+  when: is_macos
+  vars:
+    ansible_ssh_pipelining: "{{ is_macos }}"
 
 - name: download
   unarchive:
@@ -28,7 +51,12 @@
     dest: "{{ go_goroot_dir }}"
     mode: "0755"
     owner: root
-    group: root
+    group: |-
+      {%- if is_macos -%}
+        admin
+      {%- else -%}
+        root
+      {%- endif -%}
   become: true
 
 - name: configure environment
@@ -36,6 +64,11 @@
     src: go-profile.d.sh.j2
     dest: /etc/profile.d/go.sh
     owner: root
-    group: root
+    group: |-
+      {%- if is_macos -%}
+        admin
+      {%- else -%}
+        root
+      {%- endif -%}
     mode: 0755
   become: true

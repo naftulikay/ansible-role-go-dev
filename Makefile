@@ -47,7 +47,7 @@ test-osx: start
 	@mkdir -p .ansible/galaxy-roles
 	@rsync --delete --exclude=.ansible/galaxy-roles -a ./ .ansible/galaxy-roles/default/
 	@ansible-galaxy install -p .ansible/galaxy-roles -r tests/requirements.yml
-	@ansible-playbook -c local -i 127.0.0.1, tests/playbook.yml
+	@ansible-playbook -c local -i 127.0.0.1, -e test_user=$(shell whoami) --ask-become-pass tests/playbook.yml
 
 install-osx:
 	@brew install python@2 >/dev/null

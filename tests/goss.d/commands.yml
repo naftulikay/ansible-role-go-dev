@@ -10,3 +10,6 @@ command:
     exit-status: 0
     stdout:
       - "{{.Env.go_version}}"
+
+  'which fuckyou':
+    exit-status: 0
