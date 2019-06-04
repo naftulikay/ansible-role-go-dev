@@ -1,16 +1,5 @@
 ---
-go_goroot_dir: /usr/local/go
-go_version: "1.8.3"
-go_install_base: /usr/local
-go_install_dir: "{{ go_install_base }}/go-{{ go_version }}"
-go_user_path: "$HOME/.go"
+go_version: "1.12.5"
+go_user_path: "$HOME/devel"
 
-godep_version: latest
-godep_github_repo_url: https://github.com/golang/dep
-godep_github_version_regex: |
-  ^https://github\.com/golang/dep/releases/tag/v(?P<release>\d+\.\d+\.\d+)$
-godep_github_version_replace: |
-  \g<release>
-
-addtl_go_system_packages: []
-addtl_go_user_packages: []
+go_addtl_system_packages: []

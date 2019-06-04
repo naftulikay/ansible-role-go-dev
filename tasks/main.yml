@@ -1,28 +1,17 @@
 ---
-- name: fail unless go_user is defined
-  fail: msg="go_user must be set."
-  when: go_user is not defined
+- name: fail when user is not defined
+  fail:
+    msg: "go_user is not defined or is empty, it must be set."
+  when: (go_user is not defined) or (not go_user)
 
-- name: discover os facts
-  include_tasks: discover/os.yml
-
-- name: discover go facts
-  include_tasks: discover/go.yml
-
-- name: include system tasks
-  include_tasks: system.yml
-
-- name: include user tasks
-  include_tasks: user.yml
-
-# install additional dependencies
-- name: install additional go system packages
-  package: name={{ item }} state=present
-  with_items: "{{ addtl_go_system_packages }}"
-
-- name: install additional go user packages
-  command: "go get -u {{ item }}"
-  become: true
-  become_user: "{{ go_user }}"
-  become_flags: -Hi
-  with_items: "{{ addtl_go_user_packages }}"
+- name: execute tasks
+  include_tasks: "{{ include_task_item }}"
+  loop:
+    - include/00-facts.yml
+    - include/10-apt-refresh.yml
+    - include/20-packages.yml
+    - include/30-install.yml
+    - include/40-dep.yml
+    - include/90-profile.yml
+  loop_control:
+    loop_var: include_task_item

@@ -1,5 +1,6 @@
 galaxy_info:
   name: go-dev
+  src: naftulikay.go-dev
   author: Naftuli Kay
   description: Install and configure a Go development environment on a system.
 

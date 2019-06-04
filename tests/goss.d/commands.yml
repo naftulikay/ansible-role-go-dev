@@ -1,12 +1,27 @@
 ---
 command:
-  'sudo -Hiu {{.Env.go_user}} which dep':
+  # check for the target user
+  "sudo -Hu {{ .Vars.user }} bash -lc 'which dep'":
     exit-status: 0
 
-  'sudo -Hiu {{.Env.go_user}} {{.Env.go_goroot_dir}}/bin/go get -u github.com/spf13/cobra':
+  "sudo -Hu {{ .Vars.user }} bash -lc 'go get -u github.com/naftulikay/gro'":
     exit-status: 0
+    timeout: 300000
 
-  '{{.Env.go_goroot_dir}}/bin/go version':
+  "sudo -Hu {{ .Vars.user }} bash -lc 'go version'":
     exit-status: 0
     stdout:
-      - "{{.Env.go_version}}"
+      - "1.12.5"
+
+  "sudo -Hu {{ .Vars.user }} bash -lc 'echo $PATH'":
+    exit-status: 0
+    stdout:
+      - "{{ .Vars.user_home }}/devel/bin"
+      - "{{ .Vars.user_home }}/.local/share/go/current/bin"
+
+  # check that for another user the paths are appropriately set
+  "sudo -Hu root bash -lc 'echo $PATH'":
+    exit-status: 0
+    stdout:
+      - "/root/devel/bin"
+      - "/root/.local/share/go/current/bin"

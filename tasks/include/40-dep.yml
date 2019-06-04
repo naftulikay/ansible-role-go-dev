@@ -1,0 +1,21 @@
+---
+- name: fetch dep installer
+  uri:
+    url: https://raw.githubusercontent.com/golang/dep/master/install.sh
+    method: GET
+    status_code: 200
+    return_content: true
+  register: dep_installer_response
+  changed_when: false
+
+- name: install dep
+  command: sh -s
+  environment:
+    GOROOT: "{{ go_goroot_dir }}"
+    GOPATH: "{{ go_user_path.replace('$HOME', go_user_home)}}"
+    PATH: "{{ go_user_path.replace('$HOME', go_user_home) }}/bin:{{ go_user_install_dir }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  args:
+    stdin: "{{ dep_installer_response.content }}"
+    creates: "{{ go_user_path.replace('$HOME', go_user_home) }}/bin/dep"
+  become: true
+  become_user: "{{ go_user }}"

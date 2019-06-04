@@ -1,19 +1,12 @@
 ---
 dist: trusty
-sudo: required
+sudo: false
 
-matrix:
-  fast_finish: true
+language: python
+python: 3.6
+cache: pip
 
-services:
-  - docker
-
-env:
-  matrix: # each entry is its own run
-    - IMAGE: centos7
-    - IMAGE: xenial
-
-script: make clean test
+script: make test
 
 notifications:
   email:

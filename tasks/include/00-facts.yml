@@ -1,0 +1,19 @@
+---
+- name: get go user home directory
+  command: "bash -ls"
+  args:
+    stdin: "cd && pwd"
+  become: true
+  become_user: "{{ go_user }}"
+  changed_when: false
+  register: go_user_home_check
+
+- name: set go user home directory
+  set_fact:
+    go_user_home: "{{ go_user_home_check.stdout_lines | first }}"
+
+- name: set go installation directory
+  set_fact:
+    go_user_install_root: "{{ go_user_home }}/.local/share/go"
+    go_user_install_dir: "{{ go_user_home }}/.local/share/go/{{ go_version }}"
+    go_goroot_dir: "{{ go_user_home }}/.local/share/go/current"
