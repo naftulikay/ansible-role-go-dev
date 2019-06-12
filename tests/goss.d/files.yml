@@ -2,17 +2,27 @@
 file:
   /etc/profile.d/go.sh:
     exists: true
-    mode: "0755"
+    mode: "0644"
     owner: root
     group: root
     filetype: file
-    contains:
-      - "GOROOT=\"/usr/local/go\""
-      - "GOPATH=\"$HOME/.go\""
 
-  /usr/local/go:
+  "{{ .Vars.user_home }}/.local/share/go/current":
     exists: true
-    owner: root
-    group: root
+    owner: "{{ .Vars.user }}"
+    group: "{{ .Vars.user }}"
     filetype: symlink
-    linked-to: /usr/local/go-1.8.3
+    linked-to: "{{ .Vars.user_home }}/.local/share/go/{{ .Vars.go_version }}"
+
+  "{{ .Vars.user_home }}/.local/share/go/{{ .Vars.go_version }}/bin/go":
+    exists: true
+    owner: "{{ .Vars.user }}"
+    group: "{{ .Vars.user }}"
+    filetype: file
+    mode: "0755"
+
+  "{{ .Vars.user_home}}/devel":
+    exists: true
+    owner: "{{ .Vars.user }}"
+    group: "{{ .Vars.user }}"
+    filetype: directory

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+export GOROOT="{{ go_goroot_dir.replace(go_user_home, '$HOME') }}" \
+  GOPATH="{{ go_user_path.replace(go_user_home, '$HOME') }}"
+
+function __inject_path() {
+  local path="$1" && shift
+  local is_present=n
+
+  echo "$PATH" | tr ':' '\n' | while read path_component ; do
+    if [ "$path_component" == "$path" ]; then
+      is_present=y
+      break
+    fi
+  done
+
+  if [ "$is_present" == "n" ]; then
+    export PATH="$path:$PATH"
+  fi
+}
+
+__inject_path "$GOROOT/bin"
+__inject_path "$GOPATH/bin"
+
+unset __inject_path

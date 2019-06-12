@@ -1,0 +1,9 @@
+---
+- name: configure environment
+  template:
+    src: go.sh.j2
+    dest: /etc/profile.d/go.sh
+    owner: root
+    group: root
+    mode: 0644
+  become: true

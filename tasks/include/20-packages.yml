@@ -1,0 +1,10 @@
+---
+- name: install git
+  package: name=git state=present
+  become: true
+
+- name: install additional system packages
+  package:
+    name: "{{ go_addtl_system_packages }}"
+    state: present
+  become: true
